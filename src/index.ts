@@ -1,24 +1,9 @@
-import express from "express";
-import mongoose, { ConnectOptions } from "mongoose";
-import path from "path";
-import morgan from "morgan";
+import connectMongo from './config/mongo';
+import app from 'app';
 
-const app = express();
 const port = process.env.SERVER_PORT;
-const mongoUri = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/course-goals?authSource=admin`;
 
-app.use(morgan('combined'));
-app.set( "views", path.join( __dirname, "views" ) );
-app.set( "view engine", "ejs" );
-
-app.get( "/", ( req, res ) => {
-    res.render( "index" );
-} );
-
-mongoose.connect(
-  mongoUri,
-  {}
-).then(
+connectMongo().then
   () => {
     // tslint:disable-next-line:no-console
     console.log('connected to mongo');

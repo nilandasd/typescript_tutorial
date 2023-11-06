@@ -1,10 +1,8 @@
 services:
   mongodb:
     image: 'mongo'
-    volumes:
-      - data:/data/db
     env_file:
-      - ./env/mongo.env
+      - ./.env
   backend:
     build: .
     ports:
@@ -12,9 +10,6 @@ services:
     volumes:
       - ./src:/app/src
     env_file:
-      - ./env/backend.env
+      - ./.env
     depends_on:
       - mongodb
-
-volumes:
-  data:
