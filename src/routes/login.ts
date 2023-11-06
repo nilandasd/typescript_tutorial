@@ -3,8 +3,8 @@ import controller from "../controllers/loginController";
 
 const router = express.Router();
 
-router.get('/', loginController.new);
-router.post('/', loginController.create);
-router.delete('/', loginController.delete);
+router.get('/', controller.new);
+router.post('/', controller.create);
+router.delete('/', controller.delete);
 
 export default router;

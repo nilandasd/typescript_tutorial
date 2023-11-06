@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import indexRoutes from './index';
+import registerRoutes from './register';
+import loginRoutes from './login';
 
 const router = Router();
 
 router.use('/', indexRoutes);
-//app.use('/register', require('./routes/register'));
-//app.use('/login', require('./routes/login'));
+router.use('/register', registerRoutes);
+router.use('/login', loginRoutes);
 
 export default router;
