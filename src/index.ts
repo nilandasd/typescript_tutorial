@@ -1,20 +1,35 @@
 import express from "express";
+import mongoose, { ConnectOptions } from "mongoose";
 import path from "path";
-const app = express();
-const port = 8080; // default port to listen
+import morgan from "morgan";
 
-// Configure Express to use EJS
+const app = express();
+const port = process.env.SERVER_PORT;
+const mongoUri = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/course-goals?authSource=admin`;
+
+app.use(morgan('combined'));
 app.set( "views", path.join( __dirname, "views" ) );
 app.set( "view engine", "ejs" );
 
-// define a route handler for the default home page
 app.get( "/", ( req, res ) => {
-    // render the index template
     res.render( "index" );
 } );
-//
-// start the express server
-app.listen( port, () => {
+
+mongoose.connect(
+  mongoUri,
+  {}
+).then(
+  () => {
     // tslint:disable-next-line:no-console
-    console.log( `server started at http://localhost:${ port }` );
-} );
+    console.log('connected to mongo');
+    app.listen( port, () => {
+        // tslint:disable-next-line:no-console
+        console.log( `server started at http://localhost:${ port }` );
+    } );
+  }
+).catch(
+  (err: Error) => {
+    // tslint:disable-next-line:no-console
+    console.error(err);
+  }
+);
