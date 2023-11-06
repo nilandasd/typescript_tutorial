@@ -1,10 +1,9 @@
 import connectMongo from './config/mongo';
-import app from 'app';
+import app from './app';
 
 const port = process.env.SERVER_PORT;
 
-connectMongo().then
-  () => {
+connectMongo.then(() => {
     // tslint:disable-next-line:no-console
     console.log('connected to mongo');
     app.listen( port, () => {

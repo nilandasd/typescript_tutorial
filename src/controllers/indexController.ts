@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 class IndexController {
     show(req: Request, res: Response, next: NextFunction) {

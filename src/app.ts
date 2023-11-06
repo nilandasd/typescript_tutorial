@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import morgan from "morgan";
 import router from './routes/routes';
-import connectMongo from './config/mongo';
 
 const app = express();
 
