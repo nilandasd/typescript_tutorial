@@ -3,6 +3,8 @@ services:
     image: 'mongo'
     env_file:
       - ./.env
+  selenium:
+    image: 'selenium/standalone-chrome'
   backend:
     build: .
     ports:
@@ -13,3 +15,4 @@ services:
       - ./.env
     depends_on:
       - mongodb
+      - selenium
