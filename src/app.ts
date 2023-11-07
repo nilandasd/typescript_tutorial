@@ -9,6 +9,8 @@ app.use(morgan('combined'));
 app.set( "views", path.join( __dirname, "views" ) );
 app.set( "view engine", "ejs" );
 
+app.use(express.static("public/dist"));
+
 app.use('/', router);
 
 export default app;
