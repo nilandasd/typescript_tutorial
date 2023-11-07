@@ -6,8 +6,10 @@ beforeAll(async () => {
   await driver.init();
 }, 10_000);
 
-afterEach(async () => await driver.quit());
-afterAll(async () => await server.stop());
+afterAll(async () => {
+  await server.stop();
+  await driver.quit();
+}, 10_000);
 
 describe("Index Page", () => {
   it('renders the page', async () => {
