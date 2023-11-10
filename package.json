@@ -10,8 +10,9 @@
     "tsc": "tsc",
     "webpack": "npx webpack",
     "build": "npm-run-all clean lint tsc copy-assets webpack",
-    "dev:start": "npm-run-all build start",
+    "dev:start": "npm-run-all build debug:start",
     "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+    "debug:start": "node --inspect .",
     "start": "node .",
     "test": "jest --coverage"
   },
