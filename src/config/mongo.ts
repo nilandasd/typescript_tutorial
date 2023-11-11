@@ -3,7 +3,12 @@ import mongoose from "mongoose";
 async function connectToMongo() {
   const mongoUri = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/test?authSource=admin`;
 
-  return await mongoose.connect(mongoUri);
+  try {
+    return await mongoose.connect(mongoUri);
+  } catch (err: any) {
+    // tslint:disable-next-line:no-console
+    console.error(err);
+  }
 }
 
 export default connectToMongo();
