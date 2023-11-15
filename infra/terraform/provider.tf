@@ -7,14 +7,15 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "ts-project-tfstate"
+    bucket         = "type-script-project-tfstate"
     key            = "state/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    dynamodb_table = "ts-project-lockids"
+    dynamodb_table = "type-script-project-lockid"
   }
 }
 
 provider "aws" {
   region = "us-east-1"
 }
+
