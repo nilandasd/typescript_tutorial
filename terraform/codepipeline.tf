@@ -39,7 +39,7 @@ resource "aws_codepipeline" "codepipeline" {
       version          = "1"
 
       configuration = {
-        ProjectName = "test"
+        ProjectName = "test-project-cache"
       }
     }
   }
@@ -73,6 +73,15 @@ resource "aws_codestarconnections_connection" "example" {
 
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket = "my-types-script-code-pipeline-bucket"
+  force_destroy = true
+
+  versioning {
+    enabled = false
+  }
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -102,8 +111,7 @@ data "aws_iam_policy_document" "codepipeline_policy" {
       "s3:GetObjectVersion",
       "s3:GetBucketVersioning",
       "s3:PutObjectAcl",
-      "s3:PutObject",
-      "codestar-connections:UseConnection"
+      "s3:PutObject"
     ]
 
     resources = [
