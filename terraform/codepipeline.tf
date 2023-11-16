@@ -20,7 +20,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ConnectionArn    = aws_codestarconnections_connection.example.arn
-        FullRepositoryId = "my-organization/example"
+        FullRepositoryId = "nilandasd/typescript_tutorial"
         BranchName       = "main"
       }
     }
@@ -72,12 +72,7 @@ resource "aws_codestarconnections_connection" "example" {
 }
 
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = "test-bucket"
-}
-
-resource "aws_s3_bucket_acl" "codepipeline_bucket_acl" {
-  bucket = aws_s3_bucket.codepipeline_bucket.id
-  acl    = "private"
+  bucket = "my-types-script-code-pipeline-bucket"
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -108,6 +103,7 @@ data "aws_iam_policy_document" "codepipeline_policy" {
       "s3:GetBucketVersioning",
       "s3:PutObjectAcl",
       "s3:PutObject",
+      "codestar-connections:UseConnection"
     ]
 
     resources = [
