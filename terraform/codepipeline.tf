@@ -116,7 +116,8 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
     resources = [
       aws_s3_bucket.codepipeline_bucket.arn,
-      "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+      "${aws_s3_bucket.codepipeline_bucket.arn}/*",
+      aws_codebuild_project.project-with-cache.arn
     ]
   }
 
@@ -132,9 +133,22 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     actions = [
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild",
+      "codebuild:StartBuild",
     ]
 
-    resources = ["*"]
+    resources = [
+      aws_codebuild_project.project-with-cache.arn
+    ]
+  }
+
+  statement {
+    actions = [
+      "iam:PassRole",
+    ]
+
+    resources = [
+      aws_iam_role.build_project_role.arn,
+    ]
   }
 }
 
