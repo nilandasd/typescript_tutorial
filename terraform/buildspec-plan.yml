@@ -3,7 +3,6 @@ version: 0.2
 env:
   variables:
     TF_VERSION: "1.6.3"
-    PERMISSION_SETS_DIR: "permission_sets"
 
 phases:
   install:
@@ -16,8 +15,6 @@ phases:
   build:
     commands:
       - cd ${CODEBUILD_SRC_DIR}/terraform
-      - cp -r *.tf ${PERMISSION_SETS_DIR}/
-      - cd ${CODEBUILD_SRC_DIR}/terraform/${PERMISSION_SETS_DIR}
       - terraform init -no-color
       - terraform plan -out=tfplan_commitid_${CODEBUILD_RESOLVED_SOURCE_VERSION}_pipelineid_${PIPELINE_EXECUTION_ID}
       - cp tfplan_commitid_${CODEBUILD_RESOLVED_SOURCE_VERSION}_pipelineid_${PIPELINE_EXECUTION_ID} ${CODEBUILD_SRC_DIR}/
