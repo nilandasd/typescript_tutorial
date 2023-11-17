@@ -30,6 +30,7 @@ data "aws_iam_policy_document" "build_project_policy_document" {
   }
 
   statement {
+    effect = "Allow"
     sid = "SSOCodebuildAllow"
 
     actions = [
