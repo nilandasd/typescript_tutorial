@@ -37,6 +37,7 @@ data "aws_iam_policy_document" "build_project_policy_document" {
       "s3:*",
       "kms:*",
       "ssm:*",
+      "dynamodb:*",
     ]
 
     resources = [
