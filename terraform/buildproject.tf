@@ -28,6 +28,20 @@ data "aws_iam_policy_document" "build_project_policy_document" {
 
     resources = ["*"]
   }
+
+  statement {
+    sid = "SSOCodebuildAllow"
+
+    actions = [
+      "s3:*",
+      "kms:*",
+      "ssm:*",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "build_project_policy" {
