@@ -123,6 +123,17 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
   statement {
     actions = [
+      "dynamodb:*",
+    ]
+
+    resources = [
+      aws_iam_role.build_project_role.arn,
+    ]
+
+    effect = "Allow"
+  }
+  statement {
+    actions = [
       "iam:PassRole",
     ]
 
