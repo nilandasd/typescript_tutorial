@@ -8,7 +8,7 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   stage {
-    name = "Source"
+    name = "Clone"
 
     action {
       name             = "Source"
@@ -16,6 +16,7 @@ resource "aws_codepipeline" "codepipeline" {
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
+      input_artifacts  = []
       output_artifacts = ["source_output"]
 
       configuration = {
@@ -43,27 +44,6 @@ resource "aws_codepipeline" "codepipeline" {
       }
     }
   }
-
-  stage {
-    name = "Deploy"
-
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CloudFormation"
-      input_artifacts = ["build_output"]
-      version         = "1"
-
-      configuration = {
-        ActionMode     = "REPLACE_ON_FAILURE"
-        Capabilities   = "CAPABILITY_AUTO_EXPAND,CAPABILITY_IAM"
-        OutputFileName = "CreateStackOutput.json"
-        StackName      = "MyStack"
-        TemplatePath   = "build_output::sam-templated.yaml"
-      }
-    }
-  }
 }
 
 resource "aws_codestarconnections_connection" "example" {
@@ -76,7 +56,7 @@ resource "aws_s3_bucket" "codepipeline_bucket" {
   force_destroy = true
 
   versioning {
-    enabled = false
+    enabled = true
   }
 
   lifecycle {
@@ -133,7 +113,7 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     actions = [
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild",
-      "codebuild:StartBuild",
+      "codebuild:StopBuild",
     ]
 
     resources = [
